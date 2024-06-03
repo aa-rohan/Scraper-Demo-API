@@ -22,8 +22,12 @@ class ProductScrapingService
     hsh = {}
     ATTRIBUTES.each do |attribute|
       attribute_class = "#{domain.upcase}_#{attribute.upcase}_SELECTOR".constantize
-      raw_attribute = @browser.element(css: attribute_class).wait_until(&:present?)
-      hsh[attribute.to_sym] = Nokogiri::HTML(raw_attribute.inner_html).text.strip
+      begin
+        raw_attribute = @browser.element(css: attribute_class).wait_until(timeout: 15, &:present?)
+        hsh[attribute.to_sym] = Nokogiri::HTML(raw_attribute.inner_html).text.strip
+      rescue Watir::Wait::TimeoutError
+        hsh[attribute.to_sym] = nil
+      end
     end
     hsh.merge({ image_url: @browser.img(css: "#{domain.upcase}_IMAGE_URL_SELECTOR".constantize).src })
   end
