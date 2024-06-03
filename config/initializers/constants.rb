@@ -1,0 +1,6 @@
+DARAZ_TITLE_SELECTOR = '.pdp-mod-product-badge-title'
+DARAZ_DESCRIPTION_SELECTOR = '.pdp-product-highlights'
+DARAZ_PRICE_SELECTOR = '.pdp-price'
+DARAZ_IMAGE_URL_SELECTOR = '.gallery-preview-panel__image'
+DARAZ_CONTACT_INFO_SELECTOR = '.seller-name__detail-name'
+DARAZ_CATEGORY_NAME_SELECTOR = '.breadcrumb_item_anchor'
