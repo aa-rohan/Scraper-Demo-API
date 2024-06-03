@@ -67,4 +67,5 @@ group :test do
 end
 
 gem 'nokogiri'
+gem 'watir'
 gem 'httparty'
