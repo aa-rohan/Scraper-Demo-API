@@ -4,35 +4,34 @@ class ProductScrapingService
 
   def initialize(url)
     @url = url
+    @browser = Watir::Browser.new
   end
 
   def scrape
-    @browser = Watir::Browser.new
     @browser.goto(@url)
-    product = Product.create(update_hash.merge(url: @url))
-    assign_product_to_categories(product)
+    product = Product.create(scraped_data.merge(url: @url))
+    assing_categories(product)
     @browser.close
     product
   rescue StandardError => e
-    @browser.close
     Rails.logger.error "Failed to scrape product data: #{e.message}"
+  ensure
+    @browser.close
   end
 
-  def update_hash
-    hsh = {}
-    ATTRIBUTES.each do |attribute|
+  private
+
+  def scraped_data
+    ATTRIBUTES.each_with_object({}) do |attribute, hash|
       attribute_class = "#{domain.upcase}_#{attribute.upcase}_SELECTOR".constantize
-      begin
-        raw_attribute = @browser.element(css: attribute_class).wait_until(timeout: 15, &:present?)
-        hsh[attribute.to_sym] = Nokogiri::HTML(raw_attribute.inner_html).text.strip
-      rescue Watir::Wait::TimeoutError
-        hsh[attribute.to_sym] = nil
-      end
-    end
-    hsh.merge({ image_url: @browser.img(css: "#{domain.upcase}_IMAGE_URL_SELECTOR".constantize).src })
+      raw_attribute = @browser.element(css: attribute_class).wait_until(timeout: 10, &:present?)
+      hash[attribute.to_sym] = Nokogiri::HTML(raw_attribute.inner_html).text.strip
+    rescue Watir::Wait::TimeoutError
+      hash[attribute.to_sym] = nil
+    end.merge(image_url: @browser.img(css: "#{domain.upcase}_IMAGE_URL_SELECTOR".constantize).src)
   end
 
-  def assign_product_to_categories(product)
+  def assing_categories(product)
     category_class = "#{domain.upcase}_CATEGORY_NAME_SELECTOR".constantize
     raw_category_names = @browser.elements(css: category_class).wait_until(&:present?)
     raw_category_names[1...-1].each do |raw_name|
@@ -43,11 +42,6 @@ class ProductScrapingService
   end
 
   def domain
-    @_domain = begin
-      uri = URI.parse(@url)
-      parts = uri.host.split('.')
-
-      parts[1]
-    end
+    @_domain ||= URI.parse(@url).host.split('.')[1]
   end
 end
