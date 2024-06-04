@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    products = Product.all.then(&paginate)
+    products = Product.all.search(%w[title description], params[:search]).then(&paginate)
     render json: products.map(&:serialized_attributes)
   end
 

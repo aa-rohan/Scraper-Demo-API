@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   include Serializable
+  include Searchable
 
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
