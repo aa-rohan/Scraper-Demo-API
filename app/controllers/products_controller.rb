@@ -1,4 +1,9 @@
 class ProductsController < ApplicationController
+  def index
+    @products = Product.all.map(&:serialized_attributes)
+    render json: @products
+  end
+
   def scrape_product
     url = params[:url]
     product = Product.find_or_create_by(url: url)
