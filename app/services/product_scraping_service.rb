@@ -14,8 +14,6 @@ class ProductScrapingService
     update_product
   rescue Selenium::WebDriver::Error::TimeoutError
     update_product
-  rescue StandardError => e
-    Rails.logger.error "Failed to scrape product data: #{e.message}"
   ensure
     @browser.close
   end
