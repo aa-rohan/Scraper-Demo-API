@@ -1,6 +1,7 @@
 require 'nokogiri'
 class ProductScrapingService
   ATTRIBUTES = %w[title description price contact_info].freeze
+  MAX_PAGE_LOAD_TIME = 20
 
   def initialize(product)
     @product = product
@@ -8,10 +9,11 @@ class ProductScrapingService
   end
 
   def scrape
+    @browser.driver.manage.timeouts.page_load = MAX_PAGE_LOAD_TIME
     @browser.goto(@product.url)
-    @product.update(scraped_data)
-    assign_categories
-    @browser.close
+    update_product
+  rescue Selenium::WebDriver::Error::TimeoutError
+    update_product
   rescue StandardError => e
     Rails.logger.error "Failed to scrape product data: #{e.message}"
   ensure
@@ -19,6 +21,11 @@ class ProductScrapingService
   end
 
   private
+
+  def update_product
+    @product.update(scraped_data)
+    assign_categories
+  end
 
   def scraped_data
     ATTRIBUTES.each_with_object({}) do |attribute, hash|
