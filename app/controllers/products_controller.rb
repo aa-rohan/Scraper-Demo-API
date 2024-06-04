@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all.map(&:serialized_attributes)
-    render json: @products
+    products = Product.all.then(&paginate)
+    render json: products.map(&:serialized_attributes)
   end
 
   def scrape_product
