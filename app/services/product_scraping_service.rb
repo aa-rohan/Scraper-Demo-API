@@ -40,8 +40,7 @@ class ProductScrapingService
     raw_category_names = @browser.elements(css: category_class).wait_until(&:present?)
     raw_category_names[1...-1].each do |raw_name|
       category_name = Nokogiri::HTML(raw_name.inner_html).text.strip
-      category = Category.find_or_create_by(name: category_name)
-      @product.categories << category
+      @product.add_category(category_name)
     end
   end
 

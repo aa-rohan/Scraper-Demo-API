@@ -7,6 +7,11 @@ class Product < ApplicationRecord
 
   serialize :id, :title, :description, :image_url, :contact_info, :url, :price_amount, :product_categories
 
+  def add_category(category_name)
+    category = Category.find_or_create_by(name: category_name)
+    categories << category unless categories.exists?(category.id)
+  end
+
   def price_amount
     amount = price.scan(/\d/).join
     amount.to_i
