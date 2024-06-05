@@ -8,6 +8,11 @@ class ProductsController < ApplicationController
     render json: products&.map(&:serialized_attributes)
   end
 
+  def show
+    product = Product.find(params[:id])
+    render json: product.serialized_attributes
+  end
+
   def scrape_product
     url = params[:url]
     product = Product.find_or_create_by(url: url)
