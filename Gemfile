@@ -69,3 +69,4 @@ end
 gem 'nokogiri'
 gem 'watir'
 gem 'httparty'
+gem 'rack-cors', :require => 'rack/cors'
