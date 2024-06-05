@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :products, only: [:index]
+  resources :categories, only: [:index]
 
   post :scrape_product, to: 'products#scrape_product'
 end
