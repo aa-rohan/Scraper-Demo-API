@@ -1,6 +1,9 @@
 class ProductsController < ApplicationController
+  include Filterable
   def index
-    products = Product.all.search(%w[title description], params[:search]).then(&paginate)
+    products = Product.all.search(params[:search])
+    products = filter(products)
+    products = products.then(&paginate) if products.present?
     render json: products.map(&:serialized_attributes)
   end
 
