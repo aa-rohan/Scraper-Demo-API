@@ -1,16 +1,19 @@
 module Searchable
   extend ActiveSupport::Concern
-  included do
-    scope :search,
-          lambda { |keys, value|
-            return unless value.present?
+  class_methods do
+    def searchable_fields(*fields)
+      @searchable_fields = fields.map(&:to_s)
+    end
 
-            where(
-              keys
-                .map { |c| " CAST(#{c} as TEXT) ILIKE :search" }
-                .join(' OR '),
-              search: "%#{value&.strip}%"
-            )
-          }
+    def search(value)
+      return unless value.present?
+
+      where(
+        @searchable_fields
+          .map { |c| " CAST(#{c} as TEXT) ILIKE :search" }
+          .join(' OR '),
+        search: "%#{value&.strip}%"
+      )
+    end
   end
 end
