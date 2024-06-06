@@ -4,8 +4,9 @@ class ProductsController < ApplicationController
     products = Product.all
     products = products.search(params[:search]) if params[:search]
     products = filter(products)
+    total_pages = (products.count / per_page.to_f).ceil
     products = products.then(&paginate) if products.present?
-    render json: products&.map(&:serialized_attributes)
+    render json: { products: products.map(&:serialized_attributes), total_pages: total_pages }
   end
 
   def show
