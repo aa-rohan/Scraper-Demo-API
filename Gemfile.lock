@@ -100,10 +100,16 @@ GEM
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    diff-lcs (1.5.0)
     drb (2.2.1)
     erubi (1.12.0)
     et-orbi (1.2.11)
       tzinfo
+    factory_bot (6.2.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     fugit (1.11.0)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -210,9 +216,24 @@ GEM
       io-console (~> 0.5)
     rexml (3.2.8)
       strscan (>= 3.0.9)
+    rspec-core (3.11.0)
+      rspec-support (~> 3.11.0)
+    rspec-expectations (3.11.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-mocks (3.11.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-rails (5.0.3)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.11.0)
     rubyzip (2.3.2)
-    rufus-scheduler (3.9.1)
-      fugit (~> 1.1, >= 1.1.6)
     selenium-webdriver (4.21.1)
       base64 (~> 0.2)
       rexml (~> 3.2, >= 3.2.5)
@@ -223,10 +244,10 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.19.0)
-    sidekiq-scheduler (5.0.3)
-      rufus-scheduler (~> 3.2)
-      sidekiq (>= 6, < 8)
-      tilt (>= 1.4.0)
+    sidekiq-cron (1.12.0)
+      fugit (~> 1.8)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -239,7 +260,6 @@ GEM
     stringio (3.1.0)
     strscan (3.1.0)
     thor (1.3.1)
-    tilt (2.3.0)
     timeout (0.4.1)
     turbo-rails (2.0.5)
       actionpack (>= 6.0.0)
@@ -271,6 +291,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  factory_bot_rails
   httparty
   importmap-rails
   jbuilder
@@ -279,9 +300,10 @@ DEPENDENCIES
   puma (>= 5.0)
   rack-cors
   rails (~> 7.1.3, >= 7.1.3.3)
+  rspec-rails
   selenium-webdriver
   sidekiq
-  sidekiq-scheduler
+  sidekiq-cron
   sprockets-rails
   stimulus-rails
   turbo-rails
