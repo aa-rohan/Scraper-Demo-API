@@ -1,24 +1,72 @@
-# README
+# Product Scraper Application - Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the backend portion of the Product Scraper Application, developed using Ruby on Rails. This application allows users to scrape product details from e-commerce websites by providing a URL. The scraped data is stored in a PostgreSQL database and can be managed and viewed via a responsive UI. The backend is designed to handle web scraping, data storage, and asynchronous updates using Redis and Sidekiq.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- **Web Scraping**: Utilizes Nokogiri and Watir for scraping product details such as title, description, price, contact information, size, and category from e-commerce websites.
+- **Data-Driven Scraping**: Add CSS selectors to the constants.rb file for a specific website domain for a flexible and configurable scraping process.
+- **Background Processing**: Uses Redis and Sidekiq to handle background scraping tasks, ensuring the UI remains responsive. Products that are older than a week are re-fetched and updated asynchronously.
+- **Product Management**: Allows users to submit URLs for scraping and view listed products categorized by product type. Features asynchronous search and filtering for enhanced user interaction.
+- **Testing**: Comprehensive test coverage using RSpec to ensure critical functionalities work as expected.
 
-* System dependencies
+## Installation
 
-* Configuration
+### Prerequisites
 
-* Database creation
+- **Ruby**: Ensure you have Ruby installed (version 3.0.0 recommended).
+- **PostgreSQL**: Ensure you have PostgreSQL installed and running.
+- **Redis**: Ensure you have Redis installed (version 6 or higher).
 
-* Database initialization
+### Setup
 
-* How to run the test suite
+1. **Clone the repository:**
 
-* Services (job queues, cache servers, search engines, etc.)
+   ```sh
+   git clone https://github.com/aa-rohan/Scraper-Demo-API.git
+   cd Scraper-Demo-API
+   ```
+   
+2. **Install Dependencies:**
 
-* Deployment instructions
+   ```sh
+    bundle install
+    ```
+   
+3. **Setup the database:**
 
-* ...
+   ```sh
+    rails db:create
+    rails db:migrate
+    ```
+   
+4. **Setup Redis:**
+
+   ```sh
+    redis server
+    ```
+   
+5. **Start Sidekiq:**
+
+   ```sh
+    bundle exec sidekiq
+    ```
+   
+6. **Launch Rails:**
+
+   ```sh
+    rails s
+    ```
+   
+## Running Tests
+
+RSpec is used for testing. To run the test suite, use the following command:
+   
+    bundle exec rspec
+   
+## Next Steps
+
+With more time, the following could be integrated:
+
+- **Enhance Scraping Logic**: Improve the scraping logic to handle more complex websites and dynamic content.
+- **Auth**: Use Devise for creating a authentication system so users can have their own product views.
