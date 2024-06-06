@@ -1,10 +1,11 @@
 class ProductUpdateWorker
   include Sidekiq::Worker
 
-  def perform(product_id)
-    product = Product.find_by(id: product_id)
-    return unless product
+  def perform
+    old_products = Product.where('updated_at < ?', 1.week.ago)
 
-    ProductScrapingService.new(product).scrape
+    old_products.each do |product|
+      ProductScrapingService.new(product).scrape
+    end
   end
 end
