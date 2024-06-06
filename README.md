@@ -1,6 +1,6 @@
 # Product Scraper Application - Backend
 
-This is the backend portion of the Product Scraper Application, developed using Ruby on Rails. This application allows users to scrape product details from e-commerce websites by providing a URL. The scraped data is stored in a PostgreSQL database and can be managed and viewed via a responsive UI. The backend is designed to handle web scraping, data storage, and asynchronous updates using Redis and Sidekiq.
+This is the backend portion of the Product Scraper Application, developed using Ruby on Rails. This application allows users to scrape product details from e-commerce websites (Currently only Daraz and Flipkart are supported) by providing a URL. The scraped data is stored in a PostgreSQL database and can be managed and viewed via a responsive UI. The backend is designed to handle web scraping, data storage, and asynchronous updates using Redis and Sidekiq.
 
 ## Features
 
