@@ -43,7 +43,7 @@ This is the backend portion of the Product Scraper Application, developed using 
 4. **Setup Redis:**
 
    ```sh
-    redis server
+    redis-server
     ```
    
 5. **Start Sidekiq:**
