@@ -8,7 +8,7 @@ class Product < ApplicationRecord
   has_many :categories, through: :categorizations
   validates :title, :price, presence: true
 
-  serialize :id, :title, :description, :image_url, :contact_info, :url, :price_amount, :product_categories
+  serialize :id, :title, :description, :image_url, :contact_info, :url, :price_amount, :product_categories, :currency_unit
 
   scope :filter_by_category, lambda { |category_name|
     joins(:categories).where(categories: { name: category_name })
@@ -22,6 +22,11 @@ class Product < ApplicationRecord
   def price_amount
     amount = price.scan(/\d/).join
     amount.to_i
+  end
+
+  def currency_unit
+    unit = price.match(/^[^\d]*/)
+    unit ? unit[0] : ''
   end
 
   def product_categories
