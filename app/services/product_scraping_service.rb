@@ -21,6 +21,7 @@ class ProductScrapingService
   private
 
   def update_product
+    p scraped_data
     @product.update(scraped_data)
     assign_categories
   end
