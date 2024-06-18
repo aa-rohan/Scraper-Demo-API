@@ -43,7 +43,7 @@ This is the backend portion of the Product Scraper Application, developed using 
 4. **Setup Redis:**
 
    ```sh
-    redis server
+    redis-server
     ```
    
 5. **Start Sidekiq:**
@@ -63,6 +63,10 @@ This is the backend portion of the Product Scraper Application, developed using 
 RSpec is used for testing. To run the test suite, use the following command:
    
     bundle exec rspec
+
+## Usage
+
+Currently, support exists for Daraz and Flipkart. More sites can be added by modifying the constants.rb file with your ecommerce website of choice in the specified format.
    
 ## Next Steps
 
