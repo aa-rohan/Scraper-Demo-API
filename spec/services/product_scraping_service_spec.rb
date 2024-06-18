@@ -5,7 +5,7 @@ RSpec.describe ProductScrapingService do
   let(:browser) { instance_double(Watir::Browser) }
   let(:service) { described_class.new(product) }
   let(:page_html) do
-    '<html><body><div class="title">Product Title</div><div class="description">Product Description</div><div class="price">$100</div><div class="contact_info">Contact Info</div><img class="image_url" src="http://example.com/image.jpg"/><div class="category_name">Category1</div><div class="category_name">Category2</div></body></html>'
+    '<html><body><div class="title">Product Title</div><div class="description">Product Description</div><div class="price">$100</div><div class="contact_info">Contact Info</div><img class="image_url" src="http://www.daraz.com/image.jpg"/><div class="category_name">Category1</div><div class="category_name">Category2</div></body></html>'
   end
 
   before do
@@ -24,7 +24,7 @@ RSpec.describe ProductScrapingService do
                                                                 wait_until: double('element', present?: true,
                                                                                               inner_html: 'Content'))
                                                     ])
-    allow(browser).to receive(:img).and_return(double('img', src: 'http://example.com/image.jpg'))
+    allow(browser).to receive(:img).and_return(double('img', src: 'http://www.daraz.com/image.jpg'))
     allow(Nokogiri::HTML::Document).to receive(:parse).and_return(Nokogiri::HTML(page_html))
   end
 

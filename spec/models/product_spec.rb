@@ -61,6 +61,7 @@ RSpec.describe Product, type: :model do
                                                       title: 'Test Product',
                                                       price_amount: 1234,
                                                       description: 'A great product',
+                                                      currency_unit: 'Rs. ',
                                                       id: product.id,
                                                       url: product.url,
                                                       product_categories: [],
